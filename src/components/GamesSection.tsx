@@ -1,7 +1,12 @@
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
+import AppleGame from '@/components/games/AppleGame';
 
 export default function GamesSection() {
+  const [openGame, setOpenGame] = useState<string | null>(null);
+
   return (
     <>
       <section id="games" className="py-20">
@@ -16,7 +21,10 @@ export default function GamesSection() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <Card className="hover:scale-105 transition-transform cursor-pointer bg-gradient-to-br from-purple-50 to-white">
+            <Card 
+              className="hover:scale-105 transition-transform cursor-pointer bg-gradient-to-br from-purple-50 to-white"
+              onClick={() => setOpenGame('apple')}
+            >
               <CardHeader>
                 <div className="text-5xl mb-3">🍎</div>
                 <CardTitle>Кто больше соберёт яблок?</CardTitle>
@@ -205,6 +213,15 @@ export default function GamesSection() {
           </div>
         </div>
       </section>
+
+      <Dialog open={openGame === 'apple'} onOpenChange={(open) => !open && setOpenGame(null)}>
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="sr-only">Игра: Кто больше соберёт яблок</DialogTitle>
+          </DialogHeader>
+          <AppleGame />
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

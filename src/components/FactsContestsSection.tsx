@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
+import MathQuiz from '@/components/games/MathQuiz';
 
 export default function FactsContestsSection() {
+  const [openQuiz, setOpenQuiz] = useState(false);
   return (
     <>
       <section id="facts" className="py-20">
@@ -148,7 +152,7 @@ export default function FactsContestsSection() {
                   Каждую неделю новая викторина с вопросами о числах, формах и задачках. 
                   Набирай баллы и становись чемпионом математики!
                 </p>
-                <Button variant="outline" className="w-full md:w-auto">
+                <Button variant="outline" className="w-full md:w-auto" onClick={() => setOpenQuiz(true)}>
                   <Icon name="Trophy" className="mr-2" />
                   Начать викторину
                 </Button>
@@ -256,6 +260,15 @@ export default function FactsContestsSection() {
           </div>
         </div>
       </footer>
+
+      <Dialog open={openQuiz} onOpenChange={setOpenQuiz}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="sr-only">Математическая викторина</DialogTitle>
+          </DialogHeader>
+          <MathQuiz />
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
